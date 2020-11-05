@@ -11,8 +11,8 @@ class Owner(db.Model):
     owner_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
-    password = db.Column(db.String(25), nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String(80), nullable=False)
     # dogs = a list of dogs that owner owns
 
     def __repr__(self):
