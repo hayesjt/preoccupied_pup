@@ -6,10 +6,10 @@ Preoccupied Pup Sign Up
 {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container top-margin">
 
-  <form class="form-signin" method="POST" action="/signup">
-    <h2 class="form-signin-heading">Sign Up</h2>
+  <form class="form-signup" method="POST" action="/signup">
+    <h2>Sign Up</h2>
     {{ form.hidden_tag() }}
     {{ wtf.form_field(form.first_name) }}
     {{ wtf.form_field(form.last_name) }}

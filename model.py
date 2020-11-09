@@ -8,15 +8,14 @@ class Owner(db.Model):
 
     __tablename__ = 'owners'
 
-    owner_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    email = db.Column(db.String, nullable=False, unique=True, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     # dogs = a list of dogs that owner owns
 
     def __repr__(self):
-        return f'<OWNER owner_id={self.owner_id} first_name={self.first_name} last_name={self.last_name}>'
+        return f'<OWNER email={self.email} first_name={self.first_name} last_name={self.last_name}>'
 
 
 """Each dog can have one owner and also multiple meals, moods, activities, trainings, groomings, and notes"""
@@ -25,10 +24,8 @@ class Dog(db.Model):
     __tablename__ = 'dogs'
 
     dog_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey('owners.owner_id'))
+    owner_email = db.Column(db.String, db.ForeignKey('owners.email'))
     dog_name = db.Column(db.String, nullable=False)
-    birth_day = db.Column(db.String, nullable=False)
-    dog_breed = db.Column(db.String, nullable=False)
     dog_bio = db.Column(db.String, nullable=False)
     dog_img = db.Column(db.String)
     #meals = list of all meals 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Preoccupied Pup Puppy Sign Up
+{% endblock %}
+
+{% block body %}
+<div class="container top-margin">
+
+  <form class="form-pupsignin" method="POST" action="/pupsignup">
+    <h2>Add Your Pup</h2>
+    {{ form.hidden_tag() }}
+    {{ wtf.form_field(form.dog_name) }}
+    {{ wtf.form_field(form.dog_bio) }}
+    {{ wtf.form_field(form.dog_img) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up Your dog</button>
+  </form>
+
+</div> <!-- /container -->
+{% endblock %}

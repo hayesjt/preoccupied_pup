@@ -6,10 +6,80 @@ Preoccupied Pup Dashboard
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+<div class="container top-margin">
 
-      <h1>DASHBOARD</h1>
+  <h2>Puppy Dashboard</h2>
 
-    </div> <!-- /container -->
+  <!-- MEAL FORM -->
+  <form class="meal-form top-margin" method="POST" action="/dashboard">
+    <h5>Add a Meal</h5>
+    {{ meal_form.hidden_tag() }}
+    {{ wtf.form_field(meal_form.meal_type) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Meal</button>
+  </form>
+
+  <!-- MEALS CONTAINER -->
+  <div class="meals"></div>
+
+  <!-- MOOD FORM -->
+  <form class="mood-form top-margin" method="POST" action="/dashboard">
+    <h5>Add a Mood</h5>
+    {{ mood_form.hidden_tag() }}
+    {{ wtf.form_field(mood_form.mood_type) }}
+    {{ wtf.form_field(mood_form.mood_note) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Mood</button>
+  </form>
+
+  <!-- MOODS CONTAINER -->
+  <div class="moods"></div>
+
+  <!-- ACTIVITY FORM -->
+  <form class="activity-form top-margin" method="POST" action="/dashboard">
+    <h5>Add an Activity</h5>
+    {{ activity_form.hidden_tag() }}
+    {{ wtf.form_field(activity_form.activity_type) }}
+    {{ wtf.form_field(activity_form.activity_duration) }}
+    {{ wtf.form_field(activity_form.activity_note) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Activity</button>
+  </form>
+
+  <!-- ACTIVITY CONTAINER -->
+  <div class="activities"></div>
+
+  <!-- TRAINING FORM -->
+  <form class="training-form top-margin" method="POST" action="/dashboard">
+    <h5>Add a Training Session</h5>
+    {{ training_form.hidden_tag() }}
+    {{ wtf.form_field(training_form.training_type) }}
+    {{ wtf.form_field(training_form.training_duration) }}
+    {{ wtf.form_field(training_form.training_note) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Training Session</button>
+  </form>
+
+  <!-- TRAINING CONTAINER -->
+  <div class="trainings"></div>
+
+  <!-- GROOMING FORM -->
+  <form class="grooming-form top-margin" method="POST" action="/dashboard">
+    <h5>Add a Grooming Session</h5>
+    {{ grooming_form.hidden_tag() }}
+    {{ wtf.form_field(grooming_form.grooming_type) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Grooming Session</button>
+  </form>
+
+  <!-- GROOMING CONTAINER -->
+  <div class="groomings"></div>
+
+  <!-- NOTES FORM -->
+  <form class="notes-form top-margin" method="POST" action="/dashboard">
+    <h5>Add a Daily Note</h5>
+    {{ note_form.hidden_tag() }}
+    {{ wtf.form_field(note_form.note) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Grooming Session</button>
+  </form>
+
+  <!-- NOTES CONTAINER -->
+  <div class="notes"></div>
+
+</div> <!-- /container -->
 {% endblock %}
-
