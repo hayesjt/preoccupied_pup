@@ -7,6 +7,7 @@ from wtforms import (StringField, IntegerField, PasswordField, TextAreaField, Da
 from wtforms.validators import (InputRequired, Email, Length)
 from werkzeug.security import (generate_password_hash, check_password_hash)
 from model import connect_to_db
+import pytz
 import crud
 from form import (LoginForm, SignupForm, DogSignupForm, MealForm, MoodForm, ActivityForm, TrainingForm, GroomingForm, NoteForm)
 
@@ -33,7 +34,9 @@ def login():
         owner = crud.get_owner_by_email(form.email.data)
         if owner:
             if check_password_hash(owner.password, form.password.data):
+                owners_dog = crud.get_dog_by_owner(session['owner_email'])
                 session['owner_email'] = owner.email
+                session['dog_id'] = owners_dog.dog_id
                 return redirect('/dashboard')
 
         return '<p>Invalid Email or Password</p>'
@@ -80,10 +83,12 @@ def dashboard():
 
     # Variables for dog_id, current date, and current time
     dog_id = session['dog_id']
+
     current_date = date.today().strftime("%m/%d/%y")
     current_time = datetime.now().strftime("%H:%M")
 
     # Getting all data to render on dashboard
+    dog_info = crud.get_dog_by_dog_id(dog_id)
     all_meals = crud.get_all_meals(dog_id, current_date)
     all_moods = crud.get_all_moods(dog_id, current_date)
     all_activities = crud.get_all_activities(dog_id, current_date)
@@ -121,7 +126,7 @@ def dashboard():
         new_note = crud.create_note(dog_id, current_date, note_form.note.data)
         return redirect('/dashboard')
 
-    return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form, all_meals=all_meals, all_moods=all_moods, all_activities=all_activities, all_trainings=all_trainings, all_groomings=all_groomings, all_notes=all_notes)
+    return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form, all_meals=all_meals, all_moods=all_moods, all_activities=all_activities, all_trainings=all_trainings, all_groomings=all_groomings, all_notes=all_notes, dog_info=dog_info)
 
 #Running the flask app when name = main
 if __name__ == "__main__":

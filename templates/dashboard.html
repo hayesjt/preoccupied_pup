@@ -10,6 +10,12 @@ Preoccupied Pup Dashboard
 
   <h2>Puppy Dashboard</h2>
 
+  <div class="dog-info">
+    <img src="{{ dog_info.dog_img }}">
+    <h5> {{ dog_info.dog_name }} </h5>
+    <p> {{ dog_info.dog_bio }} </p>
+  </div>
+
   <!-- MEAL FORM -->
   <form class="meal-form top-margin" method="POST" action="/dashboard">
     <h5>Add a Meal</h5>

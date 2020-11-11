@@ -67,9 +67,17 @@ def create_note(dog_id, note_date, note):
 
 """READ/GET FUNCTIONS"""
 
-# Get a user by email address at log in
+# Get an owner by email address at log in
 def get_owner_by_email(email):
     return Owner.query.filter_by(email=email).first()
+
+# Get a dog by owner id
+def get_dog_by_owner(owner_email):
+    return Dog.query.filter_by(owner_email=owner_email).first()
+
+# Get a dog by dog_id
+def get_dog_by_dog_id(dog_id):
+    return Dog.query.filter_by(dog_id=dog_id).first()
 
 # Get all meals by date and dog_id
 def get_all_meals(dog_id, date):
