@@ -76,10 +76,24 @@ def get_all_meals(dog_id, date):
     return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_date == date))
 
 # Get all moods by date and dog_id
-# Get all activities by date and dog_id
+def get_all_moods(dog_id, date):
+    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_date == date))
+
+# Get all activities date and dog_id
+def get_all_activities(dog_id, date):
+    return Activity.query.filter((Activity.dog_id == dog_id) & (Activity.activity_date == date))
+
 # Get all training sessions by date and dog_id
+def get_all_training_sessions(dog_id, date):
+    return Training.query.filter((Training.dog_id == dog_id) & (Training.training_date == date))
+
 # Get all grooming sessions by date and dog_id
+def get_all_grooming_sessions(dog_id, date):
+    return Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_date == date))
+
 # Get all notes by date and dog_id
+def get_all_notes(dog_id, date):
+    return Note.query.filter((Note.dog_id == dog_id) & (Note.note_date == date))
 
 # -------------------------------------- #
 

@@ -19,7 +19,15 @@ Preoccupied Pup Dashboard
   </form>
 
   <!-- MEALS CONTAINER -->
-  <div class="meals"></div>
+  <div class="meals">
+    <ul>
+      {% for meal in all_meals %}
+      <li>
+        {{ meal.meal_type }} {{ meal.meal_time }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
   <!-- MOOD FORM -->
   <form class="mood-form top-margin" method="POST" action="/dashboard">
@@ -31,7 +39,15 @@ Preoccupied Pup Dashboard
   </form>
 
   <!-- MOODS CONTAINER -->
-  <div class="moods"></div>
+  <div class="moods">
+    <ul>
+      {% for mood in all_moods %}
+      <li>
+        {{ mood.mood_type }} {{ mood.mood_note }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
   <!-- ACTIVITY FORM -->
   <form class="activity-form top-margin" method="POST" action="/dashboard">
@@ -44,7 +60,15 @@ Preoccupied Pup Dashboard
   </form>
 
   <!-- ACTIVITY CONTAINER -->
-  <div class="activities"></div>
+  <div class="activities">
+    <ul>
+    {% for activity in all_activities %}
+    <li>
+      {{ activity.activity_type }} {{ activity.activity_time }} {{ activity.activity_duration }} {{ activity.activity_note }}
+    </li>
+    {% endfor %}
+  </ul>
+  </div>
 
   <!-- TRAINING FORM -->
   <form class="training-form top-margin" method="POST" action="/dashboard">
@@ -57,7 +81,15 @@ Preoccupied Pup Dashboard
   </form>
 
   <!-- TRAINING CONTAINER -->
-  <div class="trainings"></div>
+  <div class="trainings">
+    <ul>
+      {% for training in all_trainings %}
+      <li>
+        {{ training.training_type }} {{ training.training_time }} {{ training.training_duration }} {{ training.training_note }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
   <!-- GROOMING FORM -->
   <form class="grooming-form top-margin" method="POST" action="/dashboard">
@@ -68,7 +100,15 @@ Preoccupied Pup Dashboard
   </form>
 
   <!-- GROOMING CONTAINER -->
-  <div class="groomings"></div>
+  <div class="groomings">
+    <ul>
+      {% for grooming in all_groomings %}
+      <li>
+        {{ grooming.grooming_type }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
   <!-- NOTES FORM -->
   <form class="notes-form top-margin" method="POST" action="/dashboard">
@@ -79,7 +119,15 @@ Preoccupied Pup Dashboard
   </form>
 
   <!-- NOTES CONTAINER -->
-  <div class="notes"></div>
+  <div class="notes">
+    <ul>
+      {% for note in all_notes %}
+      <li>
+        {{ note.note }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
 </div> <!-- /container -->
 {% endblock %}

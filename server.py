@@ -70,7 +70,7 @@ def pupsignup():
 # Puppy dashboard page
 @app.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
-    # Create varibles for all forms
+    # Create variables for all forms
     meal_form = MealForm()
     mood_form = MoodForm()
     activity_form = ActivityForm()
@@ -78,13 +78,18 @@ def dashboard():
     grooming_form = GroomingForm()
     note_form = NoteForm()
 
-    # Getting all data to render on dashboard
-
+    # Variables for dog_id, current date, and current time
     dog_id = session['dog_id']
     current_date = date.today().strftime("%m/%d/%y")
-    print (current_date)
     current_time = datetime.now().strftime("%H:%M")
-    print (current_time)
+
+    # Getting all data to render on dashboard
+    all_meals = crud.get_all_meals(dog_id, current_date)
+    all_moods = crud.get_all_moods(dog_id, current_date)
+    all_activities = crud.get_all_activities(dog_id, current_date)
+    all_trainings = crud.get_all_training_sessions(dog_id, current_date)
+    all_groomings = crud.get_all_grooming_sessions(dog_id, current_date)
+    all_notes = crud.get_all_notes(dog_id, current_date)
 
     # Creating a new meal from form
     if meal_form.validate_on_submit():
@@ -116,7 +121,7 @@ def dashboard():
         new_note = crud.create_note(dog_id, current_date, note_form.note.data)
         return redirect('/dashboard')
 
-    return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form)
+    return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form, all_meals=all_meals, all_moods=all_moods, all_activities=all_activities, all_trainings=all_trainings, all_groomings=all_groomings, all_notes=all_notes)
 
 #Running the flask app when name = main
 if __name__ == "__main__":
