@@ -36,13 +36,13 @@ class MoodForm(FlaskForm):
 # Flask form used to add an activity to a dog
 class ActivityForm(FlaskForm):
     activity_type = SelectField('Activity Type', choices=['Dog Park', 'Long Walk', 'Short Walk', 'Puppy Play Date', 'Played Ball/Frisbe', 'Run'])
-    activity_duration = IntegerField('Duration in Mins', validators=[Length(min=1, max=10)])
+    activity_duration = IntegerField('Duration in Mins')
     activity_note = TextAreaField('Notes on Activity')
 
 # Flask form used to add a training session to a dog
 class TrainingForm(FlaskForm):
     training_type = SelectField('Training Type', choices=['Sit', 'Place', 'Lay Down', 'Touch', 'Heel', 'High Five'])
-    training_duration = IntegerField('Duration in Mins', validators=[Length(min=1, max=10)])
+    training_duration = IntegerField('Duration in Mins')
     training_note = TextAreaField('Notes on Training Session')
 
 # Flask form used to add a grooming session to a dog

@@ -30,7 +30,7 @@ def create_meal(dog_id, meal_type, meal_date, meal_time):
 
 # Create a new mood
 def create_mood(dog_id, mood_type, mood_date, mood_note):
-    mood = Mood(dog_id=dog_id, mood_type=meal_type, mood_date=meal_date, mood_note=mood_note)
+    mood = Mood(dog_id=dog_id, mood_type=mood_type, mood_date=mood_date, mood_note=mood_note)
     db.session.add(mood)
     db.session.commit()
     return mood
@@ -74,6 +74,7 @@ def get_owner_by_email(email):
 # Get all meals by date and dog_id
 def get_all_meals(dog_id, date):
     return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_date == date))
+
 # Get all moods by date and dog_id
 # Get all activities by date and dog_id
 # Get all training sessions by date and dog_id

@@ -85,7 +85,7 @@ class Activity(db.Model):
     activity_type = db.Column(db.String)
     activity_date = db.Column(db.String)
     activity_time = db.Column(db.String)
-    activity_duration = db.Column(db.String)
+    activity_duration = db.Column(db.Integer)
     activity_note = db.Column(db.Text)
 
     dog = db.relationship('Dog', backref='activities')
@@ -104,7 +104,7 @@ class Training(db.Model):
     training_type = db.Column(db.String)
     training_date = db.Column(db.String)
     training_time = db.Column(db.String)
-    training_duration = db.Column(db.String)
+    training_duration = db.Column(db.Integer)
     training_note = db.Column(db.Text)
 
     dog = db.relationship('Dog', backref='trainings')

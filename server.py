@@ -2,6 +2,7 @@
 from flask import (Flask, render_template, request, flash, session, redirect)
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
+from datetime import (date, datetime, time)
 from wtforms import (StringField, IntegerField, PasswordField, TextAreaField, DateField, SelectField, FileField)
 from wtforms.validators import (InputRequired, Email, Length)
 from werkzeug.security import (generate_password_hash, check_password_hash)
@@ -67,14 +68,53 @@ def pupsignup():
     return render_template("pupsignup.html", form=form)
 
 # Puppy dashboard page
-@app.route("/dashboard")
+@app.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
+    # Create varibles for all forms
     meal_form = MealForm()
     mood_form = MoodForm()
     activity_form = ActivityForm()
     training_form = TrainingForm()
     grooming_form = GroomingForm()
     note_form = NoteForm()
+
+    # Getting all data to render on dashboard
+
+    dog_id = session['dog_id']
+    current_date = date.today().strftime("%m/%d/%y")
+    print (current_date)
+    current_time = datetime.now().strftime("%H:%M")
+    print (current_time)
+
+    # Creating a new meal from form
+    if meal_form.validate_on_submit():
+        new_meal = crud.create_meal(dog_id, meal_form.meal_type.data, current_date, current_time)
+        return redirect('/dashboard')
+
+    # Creating a new mood from form
+    if mood_form.validate_on_submit():
+        new_mood = crud.create_mood(dog_id, mood_form.mood_type.data, current_date, mood_form.mood_note.data)
+        return redirect('/dashboard')
+
+    # Creating a new activity from form
+    if activity_form.validate_on_submit():
+        new_activity = crud.create_activity(dog_id, activity_form.activity_type.data, current_date, current_time, activity_form.activity_duration.data, activity_form.activity_note.data)
+        return redirect('/dashboard')
+
+    # Creating a new training session from form
+    if training_form.validate_on_submit():
+        new_training = crud.create_training(dog_id, training_form.training_type.data, current_date, current_time, training_form.training_duration.data, training_form.training_note.data)
+        return redirect('/dashboard')
+
+    # Creating a new grooming session from form
+    if grooming_form.validate_on_submit():
+        new_grooming = crud.create_grooming(dog_id, grooming_form.grooming_type.data, current_date)
+        return redirect('/dashboard')
+
+    # Creating a new note from form
+    if note_form.validate_on_submit():
+        new_note = crud.create_note(dog_id, current_date, note_form.note.data)
+        return redirect('/dashboard')
 
     return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form)
 
