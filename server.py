@@ -85,7 +85,9 @@ def dashboard():
     dog_id = session['dog_id']
 
     current_date = date.today().strftime("%m/%d/%y")
-    current_time = datetime.now().strftime("%H:%M")
+    # Note Ideal but datetime does not offer taking time directly from device being used
+    central_time = pytz.timezone('America/Chicago')
+    current_time = datetime.now(central_time).strftime("%I:%M")
 
     # Getting all data to render on dashboard
     dog_info = crud.get_dog_by_dog_id(dog_id)
