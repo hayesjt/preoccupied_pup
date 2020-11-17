@@ -1,7 +1,7 @@
 """Create, read, update, and delete operations"""
 
 # importing tables for database 
-from model import db, Owner, Dog, Meal, Mood, Activity, Training, Grooming, Note, connect_to_db
+from model import (db, Owner, Dog, Meal, Mood, Activity, Training, Grooming, Note, Medication, connect_to_db)
 
 # -------------------------------------- #
 
@@ -63,6 +63,12 @@ def create_note(dog_id, note_date, note):
     db.session.commit()
     return note
 
+def create_med(dog_id, med_type, med_date, med_note):
+    med = Med(dog_id=dog_id, med_type=med_type, med_date=med_date, med_note=med_note)
+    db.session.add(med)
+    db.session.commit()
+    return med
+
 # -------------------------------------- #
 
 """READ/GET FUNCTIONS"""
@@ -102,6 +108,11 @@ def get_all_grooming_sessions(dog_id, date):
 # Get all notes by date and dog_id
 def get_all_notes(dog_id, date):
     return Note.query.filter((Note.dog_id == dog_id) & (Note.note_date == date))
+
+# Get all meds by month and dog_id
+def get_all_meds(dog_id, month):
+    return Medication.query.filter((Medication.dog_id == dog_id) & (Medication.med_date == month))
+
 
 # -------------------------------------- #
 

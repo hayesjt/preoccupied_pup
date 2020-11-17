@@ -3,22 +3,28 @@ from flask import (Flask, render_template, request, flash, session, redirect)
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from datetime import (date, datetime, time)
-from wtforms import (StringField, IntegerField, PasswordField, TextAreaField, DateField, SelectField, FileField)
+from wtforms import (StringField, IntegerField, PasswordField, TextAreaField, SelectField, FileField)
+from form import (LoginForm, SignupForm, DogSignupForm, MealForm, MoodForm, ActivityForm, TrainingForm, GroomingForm, NoteForm, MedForm)
+from flask_uploads import (configure_uploads, IMAGES, UploadSet)
 from wtforms.validators import (InputRequired, Email, Length)
 from werkzeug.security import (generate_password_hash, check_password_hash)
 from model import connect_to_db
 import pytz
 import crud
-from form import (LoginForm, SignupForm, DogSignupForm, MealForm, MoodForm, ActivityForm, TrainingForm, GroomingForm, NoteForm)
 
 # -------------------------------------- #
 
 """ROUTES & SERVER"""
 
-#Creating an instance of the flask server along with other instances that are needed for the app
-app = Flask("__Name__")
-app.config['SECRET_KEY'] = 'ilovedogs'
+# Creating an instance of the flask server along with other instances that are needed for the app
+app = Flask(__name__)
 bootstrap = Bootstrap(app)
+app.config['SECRET_KEY'] = 'ilovedogs'
+
+# Configuring a folder for images
+app.config['UPLOADS_DEFAULT_DEST'] = 'static/imgs/user_uploads'
+images = UploadSet('images', IMAGES)
+configure_uploads(app, (images,))
 
 # Index page with about information and a link to log in or sign up
 @app.route('/')
@@ -64,7 +70,8 @@ def pupsignup():
 
     if form.validate_on_submit():
         owner_email = session['owner_email']
-        new_dog = crud.create_dog(owner_email, form.dog_name.data, form.dog_bio.data, form.dog_img.data)
+        new_dog = crud.create_dog(owner_email, form.dog_name.data, form.dog_bio.data, form.dog_img.data.filename)
+        image_save = images.save(form.dog_img.data)
         session['dog_id'] = new_dog.dog_id
         return redirect('/dashboard')
 
@@ -80,12 +87,16 @@ def dashboard():
     training_form = TrainingForm()
     grooming_form = GroomingForm()
     note_form = NoteForm()
+    med_form = MedForm()
 
     # Variables for dog_id, current date, and current time
     dog_id = session['dog_id']
 
+    # Current date and Month to use for filtering Database
     current_date = date.today().strftime("%m/%d/%y")
-    # Note Ideal but datetime does not offer taking time directly from device being used
+    current_month = date.today().strftime("%m")
+
+    # Not Ideal but datetime does not offer taking time directly from device being used
     central_time = pytz.timezone('America/Chicago')
     current_time = datetime.now(central_time).strftime("%I:%M")
 
@@ -97,6 +108,7 @@ def dashboard():
     all_trainings = crud.get_all_training_sessions(dog_id, current_date)
     all_groomings = crud.get_all_grooming_sessions(dog_id, current_date)
     all_notes = crud.get_all_notes(dog_id, current_date)
+    all_meds = crud.get_all_meds(dog_id, current_month)
 
     # Creating a new meal from form
     if meal_form.validate_on_submit():
@@ -127,8 +139,13 @@ def dashboard():
     if note_form.validate_on_submit():
         new_note = crud.create_note(dog_id, current_date, note_form.note.data)
         return redirect('/dashboard')
+    
+    # Create a new medication from form
+    if med_form.validate_on_submit():
+        new_med = crud.create_med(dog_id, med_form.med_type.data , current_month, med_form.med_note.data )
+        return redirect('/dashboard')
 
-    return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form, all_meals=all_meals, all_moods=all_moods, all_activities=all_activities, all_trainings=all_trainings, all_groomings=all_groomings, all_notes=all_notes, dog_info=dog_info)
+    return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form, med_form=med_form, all_meals=all_meals, all_moods=all_moods, all_activities=all_activities, all_trainings=all_trainings, all_groomings=all_groomings, all_notes=all_notes, all_meds=all_meds, dog_info=dog_info)
 
 #Running the flask app when name = main
 if __name__ == "__main__":

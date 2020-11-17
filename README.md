@@ -1,5 +1,9 @@
 ## Project Proposal
 
+### Video Demo - YouTube
+
+Link:
+
 ### Overview
 
 A platform dedicated to tracking and managing the life of your dogs training schedule, eating schedule, mood, grooming, and activities. This will help pet owners enhance the health and well-being of their dog(s).
@@ -7,21 +11,33 @@ A platform dedicated to tracking and managing the life of your dogs training sch
 ### Technologies required (besides typical Hackbright tech stack)
 
 - Python (flask)
-- React (javascript & AJAX)
-- React Bootstrap
+- Jinja
+- JavaScript
+- Bootstrap
 - CSS
 - HTML
 - PostgreSQL
 
+### Python Libraries Used
+
+- WTForms - Fields and Validation
+- Flask Bootstrap - Style
+- Datetime - Date and Time
+- Werkseug - Security
+- Pytz - Timezone
+- Flask Upload - Image Storage
+
 ### Data
 
-- Owner: first name, last name, email, password
-- Dog: owner ID, name, breed, sex, small bio
-- Feeding Data: meal type (breakfast, snack, etc), date entered
-- Training Data: training type (sit, leave it, etc), date entered, time duration
-- Mood Data: mood type (happy, sad, etc), date entered
-- Grooming Data: grooming type (combed, teeth brushed, etc), date entered
-- Notes Data: note ("today my dog had a great walk"), date entered
+- Owner
+- Dog
+- Feeding Data
+- Training Data
+- Activity Data
+- Mood Data
+- Grooming Data
+- Medication Data
+- Notes Data
 
 ### Roadmap
 
@@ -29,20 +45,19 @@ A platform dedicated to tracking and managing the life of your dogs training sch
 
 - Owners can log in
 - Owners can enter in dog
-- Owners can add in dog data
+- Owners can add in dog data (feeding, training,    activity, mood, grooming, and notes)
 
 #### 2.0
 
 - Graph out dogs monthly activity (last 30 days)
-- Be able to add medication
-- Be able to give medication reminders
+- Be able to add medications
+- Be able to add a profile picture of your dog
 
 #### 3.0
 
-- Be able to add picture of dog
+- Be able to give medication reminders
 - Have tabs for multiple dogs 
 - Features for other animals
-- More dog data types
 
 ### Notes
 

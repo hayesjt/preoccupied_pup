@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
-Preoccupied Pup Dashboard
+{{ dog_info.dog_name}}'s Dashboard
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@ Preoccupied Pup Dashboard
   <h2>Puppy Dashboard</h2>
 
   <div class="dog-info">
-    <img src="{{ dog_info.dog_img }}">
+    <img style="width: 25%;height: 25%;" src="/static/imgs/user_uploads/images/{{dog_info.dog_img}}">
     <h5> {{ dog_info.dog_name }} </h5>
     <p> {{ dog_info.dog_bio }} </p>
   </div>
@@ -121,7 +121,7 @@ Preoccupied Pup Dashboard
     <h5>Add a Daily Note</h5>
     {{ note_form.hidden_tag() }}
     {{ wtf.form_field(note_form.note) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Grooming Session</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add a note</button>
   </form>
 
   <!-- NOTES CONTAINER -->
@@ -129,11 +129,32 @@ Preoccupied Pup Dashboard
     <ul>
       {% for note in all_notes %}
       <li>
-        {{ note.note }}
+        {{ note.note }} {{ note.note_date }}
       </li>
       {% endfor %}
     </ul>
   </div>
 
-</div> <!-- /container -->
+
+  <!-- MEDS FORM -->
+  <form class="meds-form top-margin" method="POST" action="/dashboard">
+    <h5>Add a medication</h5>
+    {{ med_form.hidden_tag() }}
+    {{ wtf.form_field(med_form.med_type) }}
+    {{ wtf.form_field(med_form.med_note) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add a medication</button>
+  </form>
+
+  <!-- MEDS CONTAINER -->
+  <div class="meds">
+    <ul>
+      {% for med in all_meds %}
+      <li>
+        {{ med.med_type }} {{ med.med_date }} {{ med.med_note }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</div> <!-- bootstrap-container -->
 {% endblock %}

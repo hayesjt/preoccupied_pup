@@ -8,7 +8,7 @@ Preoccupied Pup Puppy Sign Up
 {% block body %}
 <div class="container top-margin">
 
-  <form class="form-pupsignin" method="POST" action="/pupsignup">
+  <form class="form-pupsignin" method="POST" action="/pupsignup" enctype="multipart/form-data">
     <h2>Add Your Pup</h2>
     {{ form.hidden_tag() }}
     {{ wtf.form_field(form.dog_name) }}

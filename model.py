@@ -38,7 +38,7 @@ class Dog(db.Model):
     owner = db.relationship('Owner', backref='dogs')
 
     def __repr__(self):
-        return f'<DOG dog_id={self.dog_id} dog_name={self.dog_name}>'
+        return f'<DOG dog_id={self.dog_id} dog_name={self.dog_name} dog_img={self.dog_img}>'
 
 
 """Each dog can have multiple meals (breakfast, dinner, treat)"""
@@ -143,6 +143,22 @@ class Note(db.Model):
 
     def __repr__(self):
         return f'<NOTE note_id={self.note_id} note_date={self.note_date} note={self.note}>'
+
+"""Each Dog can take medications so owner must track those"""
+class Medication(db.Model):
+
+    __tablename__ = "medications"
+
+    med_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'))
+    med_type = db.Column(db.String)
+    med_date = db.Column(db.String)
+    med_note = db.Column(db.Text)
+
+    dog = db.relationship('Dog', backref='medications')
+
+    def __repr__(self):
+        return f'<MED med_id={self.med_id} med_date={self.med_date} med_note={self.med_note}>'
 
 
 """Connecting to db"""

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import (StringField, IntegerField, PasswordField, TextAreaField, DateField, SelectField, FileField)
+from wtforms import (StringField, IntegerField, PasswordField, TextAreaField, SelectField, FileField)
 from wtforms.validators import (InputRequired, Email, Length)
 
 # -------------------------------------- #
@@ -47,8 +47,13 @@ class TrainingForm(FlaskForm):
 
 # Flask form used to add a grooming session to a dog
 class GroomingForm(FlaskForm):
-    grooming_type = SelectField('Training Type', choices=['Brushed', 'Clipped Nails', 'Bath', 'Hair Cut', 'Teeth Brushed', 'Cleaned Ears'])
+    grooming_type = SelectField('Grooming Type', choices=['Brushed', 'Clipped Nails', 'Bath', 'Hair Cut', 'Teeth Brushed', 'Cleaned Ears'])
 
 # Flask form used for random notes needed to a dog
 class NoteForm(FlaskForm):
     note = TextAreaField('Daily Notes')
+
+#  Flask form used for medication tracking
+class MedForm(FlaskForm):
+    med_type = SelectField('Medication Type', choices=['Heartworm', 'Flea/Tick', 'Heartworm/Flea/Tick'])
+    med_note = TextAreaField('Notes on Medication')
