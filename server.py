@@ -1,5 +1,5 @@
 #Packages that are imported 
-from flask import (Flask, render_template, request, flash, session, redirect)
+from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from datetime import (date, datetime, time)
@@ -112,27 +112,27 @@ def dashboard():
 
     # Creating a new meal from form
     if meal_form.validate_on_submit():
-        new_meal = crud.create_meal(dog_id, meal_form.meal_type.data, current_date, current_time)
+        new_meal = crud.create_meal(dog_id, meal_form.meal_type.data, current_date, current_month, current_time)
         return redirect('/dashboard')
 
     # Creating a new mood from form
     if mood_form.validate_on_submit():
-        new_mood = crud.create_mood(dog_id, mood_form.mood_type.data, current_date, mood_form.mood_note.data)
+        new_mood = crud.create_mood(dog_id, mood_form.mood_type.data, current_date, current_month, mood_form.mood_note.data)
         return redirect('/dashboard')
 
     # Creating a new activity from form
     if activity_form.validate_on_submit():
-        new_activity = crud.create_activity(dog_id, activity_form.activity_type.data, current_date, current_time, activity_form.activity_duration.data, activity_form.activity_note.data)
+        new_activity = crud.create_activity(dog_id, activity_form.activity_type.data, current_date, current_month, current_time, activity_form.activity_duration.data, activity_form.activity_note.data)
         return redirect('/dashboard')
 
     # Creating a new training session from form
     if training_form.validate_on_submit():
-        new_training = crud.create_training(dog_id, training_form.training_type.data, current_date, current_time, training_form.training_duration.data, training_form.training_note.data)
+        new_training = crud.create_training(dog_id, training_form.training_type.data, current_date, current_month, current_time, training_form.training_duration.data, training_form.training_note.data)
         return redirect('/dashboard')
 
     # Creating a new grooming session from form
     if grooming_form.validate_on_submit():
-        new_grooming = crud.create_grooming(dog_id, grooming_form.grooming_type.data, current_date)
+        new_grooming = crud.create_grooming(dog_id, grooming_form.grooming_type.data, current_date, grooming_month)
         return redirect('/dashboard')
 
     # Creating a new note from form
@@ -145,7 +145,39 @@ def dashboard():
         new_med = crud.create_med(dog_id, med_form.med_type.data , current_month, med_form.med_note.data )
         return redirect('/dashboard')
 
+
     return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form, med_form=med_form, all_meals=all_meals, all_moods=all_moods, all_activities=all_activities, all_trainings=all_trainings, all_groomings=all_groomings, all_notes=all_notes, all_meds=all_meds, dog_info=dog_info)
+
+@app.route("/mealdata")
+def mealdata():
+
+    dog_id = session['dog_id']
+    current_month = date.today().strftime("%m")
+
+    # meals chart data
+    breakfast_amount = crud.get_month_breakfasts(dog_id, current_month)
+    lunch_amount = crud.get_month_lunchs(dog_id, current_month)
+    dinner_amount = crud.get_month_dinners(dog_id, current_month)
+    snack_amount = crud.get_month_snacks(dog_id, current_month)
+    treat_amount = crud.get_month_treats(dog_id, current_month)
+    bone_amount = crud.get_month_bones(dog_id, current_month)
+
+    return jsonify(breakfast_amount, lunch_amount, dinner_amount, snack_amount, treat_amount, bone_amount) 
+
+@app.route("/mooddata")
+def mooddata():
+
+    dog_id = session['dog_id']
+    current_month = date.today().strftime("%m")
+
+    happy_amount = crud.get_month_happy(dog_id, current_month)
+    sad_amount = crud.get_month_sad(dog_id, current_month)
+    anxious_amount = crud.get_month_anxious(dog_id, current_month)
+    lonely_amount = crud.get_month_lonely(dog_id, current_month)
+    energetic_amount = crud.get_month_energetic(dog_id, current_month)
+    aggressive_amount = crud.get_month_aggressive(dog_id, current_month)
+
+    return jsonify(happy_amount, sad_amount, anxious_amount, lonely_amount, energetic_amount, aggressive_amount)
 
 #Running the flask app when name = main
 if __name__ == "__main__":

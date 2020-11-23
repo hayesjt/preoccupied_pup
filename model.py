@@ -34,6 +34,7 @@ class Dog(db.Model):
     #trainings = list of all trainings
     #groomings = list of all groomings
     #notes = list of all notes
+    #medications = list of all medications
 
     owner = db.relationship('Owner', backref='dogs')
 
@@ -50,6 +51,7 @@ class Meal(db.Model):
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'))
     meal_type = db.Column(db.String)
     meal_date = db.Column(db.String)
+    meal_month = db.Column(db.String)
     meal_time = db.Column(db.String)
 
     dog = db.relationship('Dog', backref='meals')
@@ -67,6 +69,7 @@ class Mood(db.Model):
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'))
     mood_type = db.Column(db.String)
     mood_date = db.Column(db.String)
+    mood_month = db.Column(db.String)
     mood_note = db.Column(db.Text)
 
     dog = db.relationship('Dog', backref='moods')
@@ -84,6 +87,7 @@ class Activity(db.Model):
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'))
     activity_type = db.Column(db.String)
     activity_date = db.Column(db.String)
+    activity_month = db.Column(db.String)
     activity_time = db.Column(db.String)
     activity_duration = db.Column(db.Integer)
     activity_note = db.Column(db.Text)
@@ -103,6 +107,7 @@ class Training(db.Model):
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'))
     training_type = db.Column(db.String)
     training_date = db.Column(db.String)
+    training_month = db.Column(db.String)
     training_time = db.Column(db.String)
     training_duration = db.Column(db.Integer)
     training_note = db.Column(db.Text)
@@ -122,6 +127,7 @@ class Grooming(db.Model):
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'))
     grooming_type = db.Column(db.String)
     grooming_date = db.Column(db.String)
+    grooming_month = db.Column(db.String)
 
     dog = db.relationship('Dog', backref='groomings')
 

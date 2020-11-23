@@ -1,7 +1,22 @@
+/* GLOBAL STYLES */
 body {
     background-image: url('/static/imgs/double-bubble-outline.png');
 }
 
 .top-margin {
     margin-top: 75px;
+}
+
+/* INDEX STYLES */
+.index-container {
+    background-color: #F14304;
+}
+.main-img {
+    width: 75%;
+    height: 75%;
+}
+
+.why-img {
+    width: 25%;
+    height: 25%;
 }

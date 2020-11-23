@@ -22,36 +22,36 @@ def create_dog(owner_email, dog_name, dog_bio, dog_img):
     return dog
 
 # Create a new meal
-def create_meal(dog_id, meal_type, meal_date, meal_time):
-    meal = Meal(dog_id=dog_id, meal_type=meal_type, meal_date=meal_date, meal_time=meal_time)
+def create_meal(dog_id, meal_type, meal_date, meal_month, meal_time):
+    meal = Meal(dog_id=dog_id, meal_type=meal_type, meal_date=meal_date, meal_month=meal_month, meal_time=meal_time)
     db.session.add(meal)
     db.session.commit()
     return meal
 
 # Create a new mood
-def create_mood(dog_id, mood_type, mood_date, mood_note):
-    mood = Mood(dog_id=dog_id, mood_type=mood_type, mood_date=mood_date, mood_note=mood_note)
+def create_mood(dog_id, mood_type, mood_date, mood_month, mood_note):
+    mood = Mood(dog_id=dog_id, mood_type=mood_type, mood_date=mood_date, mood_month=mood_month, mood_note=mood_note)
     db.session.add(mood)
     db.session.commit()
     return mood
 
 # Create new activity
-def create_activity(dog_id, activity_type, activity_date, activity_time, activity_duration, activity_note):
-    activity = Activity(dog_id=dog_id,activity_type=activity_type, activity_date=activity_date, activity_time=activity_time, activity_duration=activity_duration, activity_note=activity_note)
+def create_activity(dog_id, activity_type, activity_date, activity_month, activity_time, activity_duration, activity_note):
+    activity = Activity(dog_id=dog_id,activity_type=activity_type, activity_date=activity_date, activity_month=activity_month, activity_time=activity_time, activity_duration=activity_duration, activity_note=activity_note)
     db.session.add(activity)
     db.session.commit()
     return activity
 
 # Create new training
-def create_training(dog_id, training_type, training_date, training_time, training_duration, training_note):
-    training = Training(dog_id=dog_id, training_type=training_type, training_date=training_date, training_time=training_time, training_duration=training_duration, training_note=training_note)
+def create_training(dog_id, training_type, training_date, training_month, training_time, training_duration, training_note):
+    training = Training(dog_id=dog_id, training_type=training_type, training_date=training_date, training_month=training_month, training_time=training_time, training_duration=training_duration, training_note=training_note)
     db.session.add(training)
     db.session.commit()
     return training
 
 # Create new grooming
-def create_grooming(dog_id, grooming_type, grooming_date):
-    grooming = Grooming(dog_id=dog_id, grooming_type=grooming_type, grooming_date=grooming_date)
+def create_grooming(dog_id, grooming_type, grooming_date, grooming_month):
+    grooming = Grooming(dog_id=dog_id, grooming_type=grooming_type, grooming_date=grooming_date, grooming_month=grooming_month)
     db.session.add(grooming)
     db.session.commit()
     return grooming
@@ -64,7 +64,7 @@ def create_note(dog_id, note_date, note):
     return note
 
 def create_med(dog_id, med_type, med_date, med_note):
-    med = Med(dog_id=dog_id, med_type=med_type, med_date=med_date, med_note=med_note)
+    med = Medication(dog_id=dog_id, med_type=med_type, med_date=med_date, med_note=med_note)
     db.session.add(med)
     db.session.commit()
     return med
@@ -112,6 +112,58 @@ def get_all_notes(dog_id, date):
 # Get all meds by month and dog_id
 def get_all_meds(dog_id, month):
     return Medication.query.filter((Medication.dog_id == dog_id) & (Medication.med_date == month))
+
+# GET METHODS FOR CHART DATA 
+
+# MEAL DATA
+def get_month_breakfasts(dog_id, month):
+    # meals where type=breakfast
+    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Breakfast") & (Meal.meal_month == month)).count()
+
+def get_month_lunchs(dog_id, month):
+    # meals where type=lunch
+    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Lunch") & (Meal.meal_month == month)).count()
+
+def get_month_dinners(dog_id, month):
+    # meals where type=dinner
+    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Dinner") & (Meal.meal_month == month)).count()
+
+def get_month_snacks(dog_id, month):
+    # meals where type=snack
+    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Snack") & (Meal.meal_month == month)).count()
+
+def get_month_treats(dog_id, month):
+    # meals where type=treat
+    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Treat") & (Meal.meal_month == month)).count()
+
+def get_month_bones(dog_id, month):
+    # meals where type=bone
+    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Bone") & (Meal.meal_month == month)).count()
+
+# MOOD DATA
+def get_month_happy(dog_id, month):
+    # moods where type=happy
+    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Happy") & (Mood.mood_month == month)).count()
+
+def get_month_sad(dog_id, month):
+    # moods where type=sad
+    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Sad") & (Mood.mood_month == month)).count()
+
+def get_month_anxious(dog_id, month):
+    # moods where type=anxious
+    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Anxious") & (Mood.mood_month == month)).count()
+
+def get_month_lonely(dog_id, month):
+    # moods where type=lonely
+    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Lonely") & (Mood.mood_month == month)).count()
+
+def get_month_energetic(dog_id, month):
+    # moods where type=energetic
+    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Energetic") & (Mood.mood_month == month)).count()
+
+def get_month_aggressive(dog_id, month):
+    # moods where type=aggressive
+    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Aggressive") & (Mood.mood_month == month)).count()
 
 
 # -------------------------------------- #

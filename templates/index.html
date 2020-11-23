@@ -4,14 +4,57 @@
 Preoccupied Pup
 {% endblock %}
 
-{% block styles %}
-{{super()}}
-<link rel="stylesheet" href="">
-
-{% endblock %}
-
 {% block body %}
+<div class="container index-container">
 
-<div>MAIN PAGE ABOUT INFO</div>
+<!-- MAIN BRANDING SECTION -->
+<div class="row top-margin">
+    <div class="col-lg">
+
+        <h1>Preoccupied Pup</h1>
+        <img class="main-img" src="/static/imgs/main.png">
+        <p>Start occupying your pups time for improvement in health, behavior, and happiness.</p>
+
+    </div>
+</div>
+
+<!-- WHY TRACK YOUR PUP -->
+<h3>Why track your dogs day to day tasks?</h3>
+<div class="row">
+    <div class="col-lg-6">
+        <h5>Health</h5>
+        <img class="why-img" src="/static/imgs/play.jpeg">
+        <p>You dogs overall health is essential to how they act, play, and socialize with others.</p>
+    </div>
+    <div class="col-lg-6">
+        <h5>Behavior</h5>
+        <img class="why-img" src="/static/imgs/kid.jpeg">
+        <p>How your dog acts in public is essential to their own health as well as others.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <h5>Happiness</h5>
+        <img class="why-img" src="/static/imgs/play.jpeg">
+        <p>Giving your dog something to do keeps the dog both mentally and physically tired and they don't get into anything they are not supposed to.</p>
+    </div>
+    <div class="col-lg-6">
+        <h5>Owner Accountability</h5>
+        <img class="why-img" src="/static/imgs/kid.jpeg">
+        <p>Many people do not know if they are creating healthy habits for their dog and often feel like they are not giving enough time to them.</p>
+    </div>
+
+<div class="row">
+    <div class=col-lg-6>
+        <button href="/login">log in</button>
+    </div>
+    <div class=col-lg-6>
+        <button href="/signup">sign up</button>
+    </div>
+</div>
+</div>
+
+</div>
+
 
 {% endblock %}
