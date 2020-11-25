@@ -35,7 +35,7 @@ class MoodForm(FlaskForm):
 
 # Flask form used to add an activity to a dog
 class ActivityForm(FlaskForm):
-    activity_type = SelectField('Activity Type', choices=['Dog Park', 'Long Walk', 'Short Walk', 'Puppy Play Date', 'Played Ball/Frisbe', 'Run'], validators=[InputRequired()])
+    activity_type = SelectField('Activity Type', choices=['Dog Park', 'Long Walk', 'Short Walk', 'Puppy Play Date', 'Played Ball/Frisbee', 'Run'], validators=[InputRequired()])
     activity_duration = IntegerField('Duration in Mins', validators=[InputRequired()])
     activity_note = TextAreaField('Notes on Activity')
 

@@ -2,6 +2,7 @@
 
 # importing tables for database 
 from model import (db, Owner, Dog, Meal, Mood, Activity, Training, Grooming, Note, Medication, connect_to_db)
+from sqlalchemy import func
 
 # -------------------------------------- #
 
@@ -116,57 +117,58 @@ def get_all_meds(dog_id, month):
 # GET METHODS FOR CHART DATA 
 
 # MEAL DATA
-def get_month_breakfasts(dog_id, month):
+def get_month_meals(dog_id, month):
     # meals where type=breakfast
-    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Breakfast") & (Meal.meal_month == month)).count()
-
-def get_month_lunchs(dog_id, month):
-    # meals where type=lunch
-    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Lunch") & (Meal.meal_month == month)).count()
-
-def get_month_dinners(dog_id, month):
-    # meals where type=dinner
-    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Dinner") & (Meal.meal_month == month)).count()
-
-def get_month_snacks(dog_id, month):
-    # meals where type=snack
-    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Snack") & (Meal.meal_month == month)).count()
-
-def get_month_treats(dog_id, month):
-    # meals where type=treat
-    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Treat") & (Meal.meal_month == month)).count()
-
-def get_month_bones(dog_id, month):
-    # meals where type=bone
-    return Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Bone") & (Meal.meal_month == month)).count()
+    breakfasts = Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Breakfast") & (Meal.meal_month == month)).count()
+    lunches = Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Lunch") & (Meal.meal_month == month)).count()
+    dinners = Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Dinner") & (Meal.meal_month == month)).count()
+    snacks = Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Snack") & (Meal.meal_month == month)).count()
+    treats = Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Treat") & (Meal.meal_month == month)).count()
+    bones = Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Bone") & (Meal.meal_month == month)).count()
+    return (breakfasts, lunches, dinners, snacks, treats, bones)
 
 # MOOD DATA
-def get_month_happy(dog_id, month):
-    # moods where type=happy
-    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Happy") & (Mood.mood_month == month)).count()
+def get_month_moods(dog_id, month):
+    happy = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Happy") & (Mood.mood_month == month)).count()
+    sad = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Sad") & (Mood.mood_month == month)).count()
+    anxious = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Anxious") & (Mood.mood_month == month)).count()
+    lonely = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Lonely") & (Mood.mood_month == month)).count()
+    energetic = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Energetic") & (Mood.mood_month == month)).count()
+    aggressive = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Aggressive") & (Mood.mood_month == month)).count()
+    return (happy, sad, anxious, lonely, energetic, aggressive)
 
-def get_month_sad(dog_id, month):
-    # moods where type=sad
-    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Sad") & (Mood.mood_month == month)).count()
+# GROOM DATA
+def get_month_grooms(dog_id, month):
+    brushed = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Brushed") & (Grooming.grooming_month == month)).count()
+    nails_clipped = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Clipped Nails") & (Grooming.grooming_month == month)).count()
+    bath = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Bath") & (Grooming.grooming_month == month)).count()
+    hair_cut = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Hair Cut") & (Grooming.grooming_month == month)).count()
+    teeth = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Teeth Brushed") & (Grooming.grooming_month == month)).count()
+    ear_clean = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Cleaned Ears") & (Grooming.grooming_month == month)).count()
+    return (brushed, nails_clipped, bath, hair_cut, teeth, ear_clean)
 
-def get_month_anxious(dog_id, month):
-    # moods where type=anxious
-    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Anxious") & (Mood.mood_month == month)).count()
+# TRAINING DATA
+def get_month_training(dog_id, month):
+    sit = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "Sit") & (Training.training_month == month)).scalar()
+    place = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "Place") & (Training.training_month == month)).scalar()
+    lay_down = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "Lay Down") & (Training.training_month == month)).scalar()
+    touch = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "Touch") & (Training.training_month == month)).scalar()
+    heel = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "Heel") & (Training.training_month == month)).scalar()
+    high_five = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "High Five") & (Training.training_month == month)).scalar()
+    return (sit, place, lay_down, touch, heel, high_five)
 
-def get_month_lonely(dog_id, month):
-    # moods where type=lonely
-    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Lonely") & (Mood.mood_month == month)).count()
-
-def get_month_energetic(dog_id, month):
-    # moods where type=energetic
-    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Energetic") & (Mood.mood_month == month)).count()
-
-def get_month_aggressive(dog_id, month):
-    # moods where type=aggressive
-    return Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Aggressive") & (Mood.mood_month == month)).count()
+def get_month_activity(dog_id, month):
+    dog_park = db.session.query(func.sum(Activity.activity_duration)).filter((Activity.dog_id == dog_id) & (Activity.activity_type == "Dog Park") & (Activity.activity_month == month)).scalar()
+    long_walk = db.session.query(func.sum(Activity.activity_duration)).filter((Activity.dog_id == dog_id) & (Activity.activity_type == "Long Walk") & (Activity.activity_month == month)).scalar()
+    short_walk = db.session.query(func.sum(Activity.activity_duration)).filter((Activity.dog_id == dog_id) & (Activity.activity_type == "Short Walk") & (Activity.activity_month == month)).scalar()
+    puppy_play = db.session.query(func.sum(Activity.activity_duration)).filter((Activity.dog_id == dog_id) & (Activity.activity_type == "Puppy Play Date") & (Activity.activity_month == month)).scalar()
+    play_ball_frisbee = db.session.query(func.sum(Activity.activity_duration)).filter((Activity.dog_id == dog_id) & (Activity.activity_type == "Played Ball/Frisbee") & (Activity.activity_month == month)).scalar()
+    run = db.session.query(func.sum(Activity.activity_duration)).filter((Activity.dog_id == dog_id) & (Activity.activity_type == "Run") & (Activity.activity_month == month)).scalar()
+    return (dog_park, long_walk, short_walk, puppy_play, play_ball_frisbee, run)
 
 
 # -------------------------------------- #
+
 
 """CONNECTING TO SERVER AND CREATING TABLES"""
 

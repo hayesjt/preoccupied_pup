@@ -132,7 +132,7 @@ def dashboard():
 
     # Creating a new grooming session from form
     if grooming_form.validate_on_submit():
-        new_grooming = crud.create_grooming(dog_id, grooming_form.grooming_type.data, current_date, grooming_month)
+        new_grooming = crud.create_grooming(dog_id, grooming_form.grooming_type.data, current_date, current_month)
         return redirect('/dashboard')
 
     # Creating a new note from form
@@ -155,14 +155,9 @@ def mealdata():
     current_month = date.today().strftime("%m")
 
     # meals chart data
-    breakfast_amount = crud.get_month_breakfasts(dog_id, current_month)
-    lunch_amount = crud.get_month_lunchs(dog_id, current_month)
-    dinner_amount = crud.get_month_dinners(dog_id, current_month)
-    snack_amount = crud.get_month_snacks(dog_id, current_month)
-    treat_amount = crud.get_month_treats(dog_id, current_month)
-    bone_amount = crud.get_month_bones(dog_id, current_month)
+    meal_amounts = crud.get_month_meals(dog_id, current_month)
 
-    return jsonify(breakfast_amount, lunch_amount, dinner_amount, snack_amount, treat_amount, bone_amount) 
+    return jsonify(meal_amounts) 
 
 @app.route("/mooddata")
 def mooddata():
@@ -170,14 +165,39 @@ def mooddata():
     dog_id = session['dog_id']
     current_month = date.today().strftime("%m")
 
-    happy_amount = crud.get_month_happy(dog_id, current_month)
-    sad_amount = crud.get_month_sad(dog_id, current_month)
-    anxious_amount = crud.get_month_anxious(dog_id, current_month)
-    lonely_amount = crud.get_month_lonely(dog_id, current_month)
-    energetic_amount = crud.get_month_energetic(dog_id, current_month)
-    aggressive_amount = crud.get_month_aggressive(dog_id, current_month)
+    mood_amounts = crud.get_month_moods(dog_id, current_month)
 
-    return jsonify(happy_amount, sad_amount, anxious_amount, lonely_amount, energetic_amount, aggressive_amount)
+    return jsonify(mood_amounts)
+
+@app.route("/groomdata")
+def groomdata():
+
+    dog_id = session['dog_id']
+    current_month = date.today().strftime("%m")
+
+    groom_amounts = crud.get_month_grooms(dog_id, current_month)
+
+    return jsonify(groom_amounts)  
+
+@app.route("/trainingdata")
+def trainingdata():
+
+    dog_id = session['dog_id']
+    current_month = date.today().strftime("%m")
+
+    training_amounts = crud.get_month_training(dog_id, current_month)
+
+    return jsonify(training_amounts) 
+
+@app.route("/activitydata")
+def activitydata():
+
+    dog_id = session['dog_id']
+    current_month = date.today().strftime("%m")
+
+    activity_amounts = crud.get_month_activity(dog_id, current_month)
+
+    return jsonify(activity_amounts) 
 
 #Running the flask app when name = main
 if __name__ == "__main__":

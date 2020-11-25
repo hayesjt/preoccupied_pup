@@ -6,17 +6,42 @@ Preoccupied Pup Sign Up
 {% endblock %}
 
 {% block body %}
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Preoccupied Pup</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+          <li class="nav-item active"><a class="nav-link" href="{{ url_for('login') }}">Log In</a></li>
+          <li class="nav-item active"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
+      </ul>
+  </div>
+</nav>
+
 <div class="container top-margin">
 
-  <form class="form-signup" method="POST" action="/signup">
-    <h2>Sign Up</h2>
-    {{ form.hidden_tag() }}
-    {{ wtf.form_field(form.first_name) }}
-    {{ wtf.form_field(form.last_name) }}
-    {{ wtf.form_field(form.email) }}
-    {{ wtf.form_field(form.password) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
-  </form>
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+      <div class="sign-in-container">
+        <img class="sign-in-img centered-img heading-margin" src="/static/imgs/leash.PNG">
+
+        <h2 class="centered heading-margin">Sign up</h2>
+
+        <form class="form-signup" method="POST" action="/signup">
+          {{ form.hidden_tag() }}
+          {{ wtf.form_field(form.first_name) }}
+          {{ wtf.form_field(form.last_name) }}
+          {{ wtf.form_field(form.email) }}
+          {{ wtf.form_field(form.password) }}
+          <button class="btn btn-lg btn-primary btn-block btn-color text-white" type="submit">Sign up</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
 
 </div> <!-- /container -->
 {% endblock %}
