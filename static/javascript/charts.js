@@ -20,8 +20,8 @@ $.get('/mealdata', (res) => {
         options: {
             title: {
                 display: true,
-                text: 'Meals by Type'
-            }
+                text: 'Monthly Meal Data'
+            },
         }
     });
 
@@ -54,8 +54,8 @@ $.get('/mooddata', (res) => {
             legend: { display: false },
             title: {
                 display: true,
-                text: 'Meals by Type'
-            }
+                text: 'Monthly Mood Data'
+            },
         }
     });
 });
@@ -66,12 +66,11 @@ $.get('/groomdata', (res) => {
 
     var groom = document.getElementById('groomChart').getContext('2d');
     var moodChart = new Chart(groom, {
-        type: 'horizontalBar',
+        type: 'bar',
         data: {
             labels: ["Brushed", "Clipped Nails", "Bath", "Hair Cut", "Teeth Brushed", "Ears Cleaned"],
             datasets: [
                 {
-                    label: "Population (millions)",
                     backgroundColor: ["#F14304", "#5EB1BF", "#D3D3D3", "#EF7B45", "#CDEDF6", "#6D696A"],
                     data: GroomData
                 }
@@ -79,7 +78,7 @@ $.get('/groomdata', (res) => {
         },
         options: {
             scales: {
-                xAxes: [{
+                yAxes: [{
                     ticks: {
                         beginAtZero: true
                     }
@@ -88,7 +87,7 @@ $.get('/groomdata', (res) => {
             legend: { display: false },
             title: {
                 display: true,
-                text: 'Grooming By Type'
+                text: 'Monthly Grooming Data'
             }
         }
     });
@@ -121,7 +120,7 @@ $.get('/trainingdata', (res) => {
             legend: { display: false },
             title: {
                 display: true,
-                text: 'Training Duration by Command'
+                text: 'Monthly Training Data'
             }
         }
     });
@@ -156,7 +155,7 @@ $.get('/activitydata', (res) => {
             legend: { display: false },
             title: {
                 display: true,
-                text: 'Training Duration by Command'
+                text: 'Monthly Activity Data'
             }
         }
     });

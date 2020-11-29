@@ -7,6 +7,10 @@ body {
     margin-top: 75px;
 }
 
+.bottom-margin {
+    margin-bottom: 25px;;
+}
+
 .sign-in-img {
     width: 75%;
     height: auto;
@@ -39,18 +43,103 @@ body {
     border: 1px solid #8bdbe6;
     border-radius: 5px;
     margin-top: 15px;
+    width: 100%;
 }
 
 /* INDEX STYLES */
-.index-container {
-    background-color: #F14304;
+.index-section {
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 2px solid #D3D3D3;
+    border-radius: 25px;
+    width: 100%;
 }
+
 .main-img {
+    width: 100%;
+    height: auto;
+}
+
+.h-line {
+    border: 2px solid #D3D3D3;
+    background-color: #D3D3D3;
     width: 75%;
-    height: 75%;
+    margin: auto;
+}
+
+.why-container-l {
+    border: 2px solid #D3D3D3;
+    border-radius: 25px;
+    padding: 15px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.why-container-r {
+    border: 2px solid #D3D3D3;
+    border-radius: 25px;
+    padding: 15px;
+    margin-left: 10px;
+    margin-top: 20px;
 }
 
 .why-img {
-    width: 25%;
-    height: 25%;
+    width: 50%;
+    height: auto;
 }
+
+/* DASHBOARD CLASSES */
+.dashboard-title{
+    background-color: #D3D3D3;
+    border: 2px solid #D3D3D3;
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.section-container {
+    background-color: white;
+    border: 2px solid #D3D3D3;
+    border-radius: 25px;
+    margin-top: 25px;
+    padding: 10px;
+    width: 100%;
+}
+
+.chart-container {
+    position: relative;
+}
+
+.chart {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.form-btn {
+    background-color: #EF7B45;
+    border: 1px solid #EF7B45;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.form-btn:hover {
+    background-color: #6D696A;
+    border: 1px solid #6D696A;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.added-div {
+    background-color: #D3D3D3;
+    border: 2px solid #D3D3D3;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 2px;
+}
+

@@ -1,189 +1,241 @@
 {% extends 'base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
-
 {% block title %}
 {{ dog_info.dog_name}}'s Dashboard
 {% endblock %}
-
 {% block body %}
+
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
   <a class="navbar-brand" href="/">Preoccupied Pup</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-          <li class="nav-item active"><a class="nav-link" href="{{ url_for('login') }}">Log Out</a></li>
-          <li class="nav-item active"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
-      </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active"><a class="nav-link" href="{{ url_for('login') }}">Log Out</a></li>
+      <li class="nav-item active"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
+    </ul>
   </div>
 </nav>
 
+<!------------------------------------------>
 
 <div class="container top-margin">
 
-  <h2>Puppy Dashboard</h2>
-
-  <div class="dog-info">
-    <img style="width: 25%;height: 25%;" src="/static/imgs/user_uploads/images/{{dog_info.dog_img}}">
-    <h5> {{ dog_info.dog_name }} </h5>
-    <p> {{ dog_info.dog_bio }} </p>
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class="dashboard-title">{{ dog_info.dog_name }}'s Dashboard</h2>
+    </div>
   </div>
 
-  <!-- MEAL FORM -->
-  <form class="meal-form top-margin" method="POST" action="/dashboard">
-    <h5>Add a Meal</h5>
-    {{ meal_form.hidden_tag() }}
-    {{ wtf.form_field(meal_form.meal_type) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Meal</button>
-  </form>
+  <div class="row">
 
-  <!-- MEALS CONTAINER -->
-  <div class="meals">
-    <ul>
-      {% for meal in all_meals %}
-      <li>
-        {{ meal.meal_type }} {{ meal.meal_time }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+    <!-- MAIN ROW WITH ALL GRAPHS AND TRACKERS -->
+    <div class="col-lg-8">
 
-  <!-- MOOD FORM -->
-  <form class="mood-form top-margin" method="POST" action="/dashboard">
-    <h5>Add a Mood</h5>
-    {{ mood_form.hidden_tag() }}
-    {{ wtf.form_field(mood_form.mood_type) }}
-    {{ wtf.form_field(mood_form.mood_note) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Mood</button>
-  </form>
+      <div class="row section-container">
+        <!--Start of Meal Row-->
+        <div class="col-lg-4">
+          <!-- MEAL FORM -->
+          <form class="meal-form" method="POST" action="/dashboard">
+            <h5>{{ dog_info.dog_name }}'s Meal Data</h5>
+            {{ meal_form.hidden_tag() }}
+            {{ wtf.form_field(meal_form.meal_type) }}
+            <button class="btn btn-primary btn-block form-btn" type="submit">Add Meal</button>
+          </form>
 
-  <!-- MOODS CONTAINER -->
-  <div class="moods">
-    <ul>
-      {% for mood in all_moods %}
-      <li>
-        {{ mood.mood_type }} {{ mood.mood_note }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+          <!-- MEALS CONTAINER -->
+          <div class="meals">
+            {% for meal in all_meals %}
+            <div class="added-div">
+              <strong>{{ meal.meal_time }}</strong> | {{ meal.meal_type }}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <!-- MEAL CHART -->
+          <canvas class="chart" id="mealChart"></canvas>
+        </div>
+      </div>
+      <!--End of Meal Row-->
 
-  <!-- ACTIVITY FORM -->
-  <form class="activity-form top-margin" method="POST" action="/dashboard">
-    <h5>Add an Activity</h5>
-    {{ activity_form.hidden_tag() }}
-    {{ wtf.form_field(activity_form.activity_type) }}
-    {{ wtf.form_field(activity_form.activity_duration) }}
-    {{ wtf.form_field(activity_form.activity_note) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Activity</button>
-  </form>
+      <!-- Start of Mood Row -->
+      <div class="row top-margin section-container">
+        <div class="col-lg-4">
+          <!-- MOOD FORM -->
+          <form class="mood-form" method="POST" action="/dashboard">
+            <h5>{{ dog_info.dog_name }}'s Mood Data</h5>
+            {{ mood_form.hidden_tag() }}
+            {{ wtf.form_field(mood_form.mood_type) }}
+            {{ wtf.form_field(mood_form.mood_note) }}
+            <button class="btn btn-primary btn-block form-btn" type="submit">Add Mood</button>
+          </form>
 
-  <!-- ACTIVITY CONTAINER -->
-  <div class="activities">
-    <ul>
-    {% for activity in all_activities %}
-    <li>
-      {{ activity.activity_type }} {{ activity.activity_time }} {{ activity.activity_duration }} {{ activity.activity_note }}
-    </li>
-    {% endfor %}
-  </ul>
-  </div>
+          <!-- MOODS CONTAINER -->
+          <div class="moods">
+              {% for mood in all_moods %}
+              <div class="added-div">
+                <h5>{{ mood.mood_type }}</h5>
+                <p>{{ mood.mood_note }}</p> 
+              </div>
+              {% endfor %}
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <!-- MOOD CHART -->
+          <canvas class="chart" id="moodChart"></canvas>
+        </div>
+      </div>
+      <!-- End of Mood Row -->
 
-  <!-- TRAINING FORM -->
-  <form class="training-form top-margin" method="POST" action="/dashboard">
-    <h5>Add a Training Session</h5>
-    {{ training_form.hidden_tag() }}
-    {{ wtf.form_field(training_form.training_type) }}
-    {{ wtf.form_field(training_form.training_duration) }}
-    {{ wtf.form_field(training_form.training_note) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Training Session</button>
-  </form>
+      <!-- Start of Activity Row -->
+      <div class="row top-margin section-container">
+        <div class="col-lg-4">
+          <!-- ACTIVITY FORM -->
+          <form class="activity-form" method="POST" action="/dashboard">
+            <h5>Add an Activity</h5>
+            {{ activity_form.hidden_tag() }}
+            {{ wtf.form_field(activity_form.activity_type) }}
+            {{ wtf.form_field(activity_form.activity_duration) }}
+            {{ wtf.form_field(activity_form.activity_note) }}
+            <button class="btn btn-primary btn-block form-btn" type="submit">Add Activity</button>
+          </form>
 
-  <!-- TRAINING CONTAINER -->
-  <div class="trainings">
-    <ul>
-      {% for training in all_trainings %}
-      <li>
-        {{ training.training_type }} {{ training.training_time }} {{ training.training_duration }} {{ training.training_note }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+          <!-- ACTIVITY CONTAINER -->
+          <div class="activities">
+              {% for activity in all_activities %}
+              <div class="added-div">
+                <p><strong>{{ activity.activity_time }} | {{ activity.activity_type }}</strong></p>
+                <p><strong>Note: </strong>{{ activity.activity_note }}</p>
+                <p><strong>Duration: </strong>{{ activity.activity_duration }} mins</p>
+              </div>
+              {% endfor %}
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <!-- ACTIVITY CHART -->
+          <canvas class="chart" id="trainChart"></canvas>
+        </div>
+      </div>
+      <!-- End of Activity Row -->
 
-  <!-- GROOMING FORM -->
-  <form class="grooming-form top-margin" method="POST" action="/dashboard">
-    <h5>Add a Grooming Session</h5>
-    {{ grooming_form.hidden_tag() }}
-    {{ wtf.form_field(grooming_form.grooming_type) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Grooming Session</button>
-  </form>
+      <!-- Start of Training Row -->
+      <div class="row top-margin section-container">
+        <div class="col-lg-4">
+          <!-- TRAINING FORM -->
+          <form class="training-form" method="POST" action="/dashboard">
+            <h5>Add a Training Session</h5>
+            {{ training_form.hidden_tag() }}
+            {{ wtf.form_field(training_form.training_type) }}
+            {{ wtf.form_field(training_form.training_duration) }}
+            {{ wtf.form_field(training_form.training_note) }}
+            <button class="btn btn-primary btn-block form-btn" type="submit">Add Training Session</button>
+          </form>
 
-  <!-- GROOMING CONTAINER -->
-  <div class="groomings">
-    <ul>
-      {% for grooming in all_groomings %}
-      <li>
-        {{ grooming.grooming_type }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+          <!-- TRAINING CONTAINER -->
+          <div class="trainings">
+              {% for training in all_trainings %}
+              <div class="added-div">
+                <p><strong>{{ training.training_time }} | {{ training.training_type }}</strong></p>
+                <p><strong>Note: </strong>{{ training.training_note }}</p>
+                <p><strong>Duration: </strong>{{ training.training_duration }} mins</p>
+              </div>
+              {% endfor %}
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <!-- TRAINING CHART -->
+          <canvas class="chart" id="activityChart"></canvas>
+        </div>
+      </div>
+      <!-- End of Training Row -->
 
-  <!-- NOTES FORM -->
-  <form class="notes-form top-margin" method="POST" action="/dashboard">
-    <h5>Add a Daily Note</h5>
-    {{ note_form.hidden_tag() }}
-    {{ wtf.form_field(note_form.note) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add a note</button>
-  </form>
+      <!-- Start of Grooming Row -->
+      <div class="row top-margin section-container">
+        <div class="col-lg-4">
+          <!-- GROOMING FORM -->
+          <form class="grooming-form" method="POST" action="/dashboard">
+            <h5>Add a Grooming Session</h5>
+            {{ grooming_form.hidden_tag() }}
+            {{ wtf.form_field(grooming_form.grooming_type) }}
+            <button class="btn btn-primary btn-block form-btn" type="submit">Add Grooming Session</button>
+          </form>
 
-  <!-- NOTES CONTAINER -->
-  <div class="notes">
-    <ul>
-      {% for note in all_notes %}
-      <li>
-        {{ note.note }} {{ note.note_date }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+          <!-- GROOMING CONTAINER -->
+          <div class="groomings">
+              {% for grooming in all_groomings %}
+              <div class="added-div">
+                <strong>{{ grooming.grooming_type }}</strong>
+              </div>
+              {% endfor %}
+          </div>
+        </div>
+        <div class="col-lg-8 chart-container">
+          <!-- GROOMING CHART -->
+          <canvas class="chart" id="groomChart"></canvas>
+        </div>
+      </div>
+      <!-- End of Grooming Row -->
+    </div>
 
 
-  <!-- MEDS FORM -->
-  <form class="meds-form top-margin" method="POST" action="/dashboard">
-    <h5>Add a medication</h5>
-    {{ med_form.hidden_tag() }}
-    {{ wtf.form_field(med_form.med_type) }}
-    {{ wtf.form_field(med_form.med_note) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add a medication</button>
-  </form>
 
-  <!-- MEDS CONTAINER -->
-  <div class="meds">
-    <ul>
-      {% for med in all_meds %}
-      <li>
-        {{ med.med_type }} {{ med.med_date }} {{ med.med_note }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+    <!-- SUB ROW PROFILE PICTURES & NOTES -->
+    <div class="col-lg-4">
 
-  <!-- CHARTS -->
+      <!-- Profile picture, dog name, and bio -->
+      <div class="dog-info">
+        <img style="width: 25%;height: 25%;" src="/static/imgs/user_uploads/images/{{dog_info.dog_img}}">
+        <h5> {{ dog_info.dog_name }} </h5>
+        <p> {{ dog_info.dog_bio }} </p>
+      </div>
 
-  <!-- MEAL CHART -->
-  <canvas id="mealChart"></canvas>
-  <!-- MOOD CHART -->
-  <canvas id="moodChart"></canvas>
-  <!-- GROOMING CHART -->
-  <canvas id="groomChart"></canvas>
-  <!-- ACTIVITY CHART -->
-  <canvas id="trainChart"></canvas>
-  <!-- TRAINING CHART -->
-  <canvas id="activityChart"></canvas>
+      <!-- med form and monthly medications dog has taken -->
+      <!-- MEDS FORM -->
+      <form class="meds-form top-margin" method="POST" action="/dashboard">
+        <h5>Add a medication</h5>
+        {{ med_form.hidden_tag() }}
+        {{ wtf.form_field(med_form.med_type) }}
+        {{ wtf.form_field(med_form.med_note) }}
+        <button class="btn btn-primary btn-block form-btn" type="submit">Add a medication</button>
+      </form>
+
+      <!-- MEDS CONTAINER -->
+      <div class="meds">
+        <ul>
+          {% for med in all_meds %}
+          <li>
+            {{ med.med_type }} {{ med.med_date }} {{ med.med_note }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Note form and all previous notes -->
+      <!-- NOTES FORM -->
+      <form class="notes-form top-margin" method="POST" action="/dashboard">
+        <h5>Add a Daily Note</h5>
+        {{ note_form.hidden_tag() }}
+        {{ wtf.form_field(note_form.note) }}
+        <button class="btn btn-primary btn-block form-btn" type="submit">Add a note</button>
+      </form>
+
+      <!-- NOTES CONTAINER -->
+      <div class="notes">
+        <ul>
+          {% for note in all_notes %}
+          <li>
+            {{ note.note }} {{ note.note_date }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div> <!-- End of row-->
+
 
 </div> <!-- bootstrap-container -->
-
 {% endblock %}
