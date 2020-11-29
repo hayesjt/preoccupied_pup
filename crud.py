@@ -114,9 +114,12 @@ def get_all_notes(dog_id, date):
 def get_all_meds(dog_id, month):
     return Medication.query.filter((Medication.dog_id == dog_id) & (Medication.med_date == month))
 
-# GET METHODS FOR CHART DATA 
 
-# MEAL DATA
+# -------------------------------------- #
+
+"""CHART READ/GET FUNCTIONS"""
+
+# MEAL CHART DATA
 def get_month_meals(dog_id, month):
     # meals where type=breakfast
     breakfasts = Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Breakfast") & (Meal.meal_month == month)).count()
@@ -127,7 +130,7 @@ def get_month_meals(dog_id, month):
     bones = Meal.query.filter((Meal.dog_id == dog_id) & (Meal.meal_type == "Bone") & (Meal.meal_month == month)).count()
     return (breakfasts, lunches, dinners, snacks, treats, bones)
 
-# MOOD DATA
+# MOOD CHART DATA
 def get_month_moods(dog_id, month):
     happy = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Happy") & (Mood.mood_month == month)).count()
     sad = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Sad") & (Mood.mood_month == month)).count()
@@ -137,7 +140,7 @@ def get_month_moods(dog_id, month):
     aggressive = Mood.query.filter((Mood.dog_id == dog_id) & (Mood.mood_type == "Aggressive") & (Mood.mood_month == month)).count()
     return (happy, sad, anxious, lonely, energetic, aggressive)
 
-# GROOM DATA
+# GROOM CHART DATA
 def get_month_grooms(dog_id, month):
     brushed = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Brushed") & (Grooming.grooming_month == month)).count()
     nails_clipped = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Clipped Nails") & (Grooming.grooming_month == month)).count()
@@ -147,7 +150,7 @@ def get_month_grooms(dog_id, month):
     ear_clean = Grooming.query.filter((Grooming.dog_id == dog_id) & (Grooming.grooming_type == "Cleaned Ears") & (Grooming.grooming_month == month)).count()
     return (brushed, nails_clipped, bath, hair_cut, teeth, ear_clean)
 
-# TRAINING DATA
+# TRAINING CHART DATA
 def get_month_training(dog_id, month):
     sit = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "Sit") & (Training.training_month == month)).scalar()
     place = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "Place") & (Training.training_month == month)).scalar()
@@ -157,6 +160,7 @@ def get_month_training(dog_id, month):
     high_five = db.session.query(func.sum(Training.training_duration)).filter((Training.dog_id == dog_id) & (Training.training_type == "High Five") & (Training.training_month == month)).scalar()
     return (sit, place, lay_down, touch, heel, high_five)
 
+# ACTIVITY CHART DATA
 def get_month_activity(dog_id, month):
     dog_park = db.session.query(func.sum(Activity.activity_duration)).filter((Activity.dog_id == dog_id) & (Activity.activity_type == "Dog Park") & (Activity.activity_month == month)).scalar()
     long_walk = db.session.query(func.sum(Activity.activity_duration)).filter((Activity.dog_id == dog_id) & (Activity.activity_type == "Long Walk") & (Activity.activity_month == month)).scalar()
@@ -171,7 +175,6 @@ def get_month_activity(dog_id, month):
 
 
 """CONNECTING TO SERVER AND CREATING TABLES"""
-
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)

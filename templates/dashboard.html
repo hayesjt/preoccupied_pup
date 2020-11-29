@@ -24,6 +24,7 @@
 
 <div class="container top-margin">
 
+  <!-- DASHBOARD TITLE BLOCK -->
   <div class="row">
     <div class="col-lg-12">
       <h2 class="dashboard-title">{{ dog_info.dog_name }}'s Dashboard</h2>
@@ -76,12 +77,12 @@
 
           <!-- MOODS CONTAINER -->
           <div class="moods">
-              {% for mood in all_moods %}
-              <div class="added-div">
-                <h5>{{ mood.mood_type }}</h5>
-                <p>{{ mood.mood_note }}</p> 
-              </div>
-              {% endfor %}
+            {% for mood in all_moods %}
+            <div class="added-div">
+              <h5>{{ mood.mood_type }}</h5>
+              <p>{{ mood.mood_note }}</p>
+            </div>
+            {% endfor %}
           </div>
         </div>
         <div class="col-lg-8">
@@ -96,7 +97,7 @@
         <div class="col-lg-4">
           <!-- ACTIVITY FORM -->
           <form class="activity-form" method="POST" action="/dashboard">
-            <h5>Add an Activity</h5>
+            <h5>{{ dog_info.dog_name }}'s Activity Data</h5>
             {{ activity_form.hidden_tag() }}
             {{ wtf.form_field(activity_form.activity_type) }}
             {{ wtf.form_field(activity_form.activity_duration) }}
@@ -106,13 +107,13 @@
 
           <!-- ACTIVITY CONTAINER -->
           <div class="activities">
-              {% for activity in all_activities %}
-              <div class="added-div">
-                <p><strong>{{ activity.activity_time }} | {{ activity.activity_type }}</strong></p>
-                <p><strong>Note: </strong>{{ activity.activity_note }}</p>
-                <p><strong>Duration: </strong>{{ activity.activity_duration }} mins</p>
-              </div>
-              {% endfor %}
+            {% for activity in all_activities %}
+            <div class="added-div">
+              <p><strong>{{ activity.activity_time }} | {{ activity.activity_type }}</strong></p>
+              <p><strong>Note: </strong>{{ activity.activity_note }}</p>
+              <p><strong>Duration: </strong>{{ activity.activity_duration }} mins</p>
+            </div>
+            {% endfor %}
           </div>
         </div>
         <div class="col-lg-8">
@@ -127,7 +128,7 @@
         <div class="col-lg-4">
           <!-- TRAINING FORM -->
           <form class="training-form" method="POST" action="/dashboard">
-            <h5>Add a Training Session</h5>
+            <h5>{{ dog_info.dog_name }}'s Training Data</h5>
             {{ training_form.hidden_tag() }}
             {{ wtf.form_field(training_form.training_type) }}
             {{ wtf.form_field(training_form.training_duration) }}
@@ -137,13 +138,13 @@
 
           <!-- TRAINING CONTAINER -->
           <div class="trainings">
-              {% for training in all_trainings %}
-              <div class="added-div">
-                <p><strong>{{ training.training_time }} | {{ training.training_type }}</strong></p>
-                <p><strong>Note: </strong>{{ training.training_note }}</p>
-                <p><strong>Duration: </strong>{{ training.training_duration }} mins</p>
-              </div>
-              {% endfor %}
+            {% for training in all_trainings %}
+            <div class="added-div">
+              <p><strong>{{ training.training_time }} | {{ training.training_type }}</strong></p>
+              <p><strong>Note: </strong>{{ training.training_note }}</p>
+              <p><strong>Duration: </strong>{{ training.training_duration }} mins</p>
+            </div>
+            {% endfor %}
           </div>
         </div>
         <div class="col-lg-8">
@@ -158,19 +159,19 @@
         <div class="col-lg-4">
           <!-- GROOMING FORM -->
           <form class="grooming-form" method="POST" action="/dashboard">
-            <h5>Add a Grooming Session</h5>
+            <h5>{{ dog_info.dog_name }}'s Grooming Data</h5>
             {{ grooming_form.hidden_tag() }}
             {{ wtf.form_field(grooming_form.grooming_type) }}
-            <button class="btn btn-primary btn-block form-btn" type="submit">Add Grooming Session</button>
+            <button class="btn btn-primary btn-block form-btn grooming-btn" type="submit">Add Grooming Session</button>
           </form>
 
           <!-- GROOMING CONTAINER -->
           <div class="groomings">
-              {% for grooming in all_groomings %}
-              <div class="added-div">
-                <strong>{{ grooming.grooming_type }}</strong>
-              </div>
-              {% endfor %}
+            {% for grooming in all_groomings %}
+            <div class="added-div">
+              <strong>{{ grooming.grooming_type }}</strong>
+            </div>
+            {% endfor %}
           </div>
         </div>
         <div class="col-lg-8 chart-container">
@@ -179,24 +180,24 @@
         </div>
       </div>
       <!-- End of Grooming Row -->
-    </div>
+    </div> <!-- End of Main row-->
 
 
 
-    <!-- SUB ROW PROFILE PICTURES & NOTES -->
-    <div class="col-lg-4">
+    <!-- SUB ROW PROFILE PICTURES, MEDICATIONS, & NOTES -->
+    <div class="col-lg-4 section-container">
 
       <!-- Profile picture, dog name, and bio -->
       <div class="dog-info">
-        <img style="width: 25%;height: 25%;" src="/static/imgs/user_uploads/images/{{dog_info.dog_img}}">
-        <h5> {{ dog_info.dog_name }} </h5>
-        <p> {{ dog_info.dog_bio }} </p>
+        <img class="profile-pic centered mx-auto d-block" src="/static/imgs/user_uploads/images/{{dog_info.dog_img}}">
+        <h3 class="centered"> {{ dog_info.dog_name }} </h3>
+        <p class="centered"> {{ dog_info.dog_bio }} </p>
+        <div class="h-line centered heading-margin"></div>
       </div>
 
-      <!-- med form and monthly medications dog has taken -->
       <!-- MEDS FORM -->
       <form class="meds-form top-margin" method="POST" action="/dashboard">
-        <h5>Add a medication</h5>
+        <h5>{{ dog_info.dog_name }}'s Monthly Med Data</h5>
         {{ med_form.hidden_tag() }}
         {{ wtf.form_field(med_form.med_type) }}
         {{ wtf.form_field(med_form.med_note) }}
@@ -205,19 +206,16 @@
 
       <!-- MEDS CONTAINER -->
       <div class="meds">
-        <ul>
-          {% for med in all_meds %}
-          <li>
-            {{ med.med_type }} {{ med.med_date }} {{ med.med_note }}
-          </li>
-          {% endfor %}
-        </ul>
+        {% for med in all_meds %}
+        <div class="added-div">
+          <p><strong>{{ med.med_type }}</strong>: {{ med.med_note }}</p>
+        </div>
+        {% endfor %}
       </div>
 
-      <!-- Note form and all previous notes -->
       <!-- NOTES FORM -->
       <form class="notes-form top-margin" method="POST" action="/dashboard">
-        <h5>Add a Daily Note</h5>
+        <h5>{{ dog_info.dog_name }}'s Notes</h5>
         {{ note_form.hidden_tag() }}
         {{ wtf.form_field(note_form.note) }}
         <button class="btn btn-primary btn-block form-btn" type="submit">Add a note</button>
@@ -225,16 +223,15 @@
 
       <!-- NOTES CONTAINER -->
       <div class="notes">
-        <ul>
-          {% for note in all_notes %}
-          <li>
-            {{ note.note }} {{ note.note_date }}
-          </li>
-          {% endfor %}
-        </ul>
+        {% for note in all_notes %}
+        <div class="added-div">
+          <p><strong>{{ note.note_date }}</strong></p>
+          <p>{{ note.note }}</p>
+        </div>
+        {% endfor %}
       </div>
     </div>
-  </div> <!-- End of row-->
+  </div> <!-- End of Main row-->
 
 
 </div> <!-- bootstrap-container -->

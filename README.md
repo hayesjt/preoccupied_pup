@@ -6,7 +6,7 @@ Link:
 
 ### Overview
 
-A platform dedicated to tracking and managing the life of your dogs training schedule, eating schedule, mood, grooming, and activities. This will help pet owners enhance the health and well-being of their dog(s).
+A platform dedicated to tracking and managing your dogs training schedule, eating schedule, medications, mood, grooming, and activities. This will help pet owners enhance the health and well-being of their dog(s).
 
 ### Technologies required (besides typical Hackbright tech stack)
 
@@ -32,26 +32,27 @@ A platform dedicated to tracking and managing the life of your dogs training sch
 - Owner
 - Dog
 - Feeding Data
+- Medication Data
 - Training Data
 - Activity Data
 - Mood Data
 - Grooming Data
-- Medication Data
 - Notes Data
 
-### Roadmap
 
 #### MVP
 
-- Owners can log in
-- Owners can enter in dog
-- Owners can add in dog data (feeding, training,    activity, mood, grooming, and notes)
+- Owners can log in/Sign up
+- Owners can enter in a dog
+- Owners can add in dog data (feeding, training, activity, mood, grooming, and notes)
 
-#### 2.0
+#### 2.0 
 
 - Graph out dogs monthly activity (last 30 days)
 - Be able to add medications
 - Be able to add a profile picture of your dog
+
+Note: 2.0 was completed during project time.
 
 #### 3.0
 
@@ -59,6 +60,18 @@ A platform dedicated to tracking and managing the life of your dogs training sch
 - Have tabs for multiple dogs 
 - Features for other animals
 
-### Notes
+Note: 3.0 was not completed during project time.
 
-Replace this with anything else about the project
+#### Other Features I would like to add in the future:
+
+- More mobile friendly
+- Refresh and keep owners page on HTML page
+- Charts keeping location correctly
+- Using cloud and API service for profile pictures
+- More Data
+- Daily Graphs
+- Yearly Graphs
+- Tabs for Graphs
+- Be able to filter by day, month, and year data
+- Reminders for other data other than medications
+

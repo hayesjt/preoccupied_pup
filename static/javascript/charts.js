@@ -60,7 +60,7 @@ $.get('/mooddata', (res) => {
     });
 });
 
-// GROOM HORIZONTAL BAR GRAPH
+// GROOM BAR GRAPH
 $.get('/groomdata', (res) => {
     var GroomData = res;
 
@@ -129,7 +129,6 @@ $.get('/trainingdata', (res) => {
 // ACTIVITY BAR GRAPH
 $.get('/activitydata', (res) => {
     var ActivityData = res;
-    console.log(ActivityData)
 
     var train = document.getElementById('activityChart').getContext('2d');
     var moodChart = new Chart(train, {

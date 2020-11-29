@@ -1,12 +1,9 @@
 #Packages that are imported 
-from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
+from flask import (Flask, render_template, session, redirect, jsonify)
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
-from datetime import (date, datetime, time)
-from wtforms import (StringField, IntegerField, PasswordField, TextAreaField, SelectField, FileField)
+from datetime import (date, datetime)
 from form import (LoginForm, SignupForm, DogSignupForm, MealForm, MoodForm, ActivityForm, TrainingForm, GroomingForm, NoteForm, MedForm)
 from flask_uploads import (configure_uploads, IMAGES, UploadSet)
-from wtforms.validators import (InputRequired, Email, Length)
 from werkzeug.security import (generate_password_hash, check_password_hash)
 from model import connect_to_db
 import pytz
@@ -148,56 +145,56 @@ def dashboard():
 
     return render_template("dashboard.html", meal_form=meal_form, mood_form=mood_form, activity_form=activity_form, training_form=training_form, grooming_form=grooming_form, note_form=note_form, med_form=med_form, all_meals=all_meals, all_moods=all_moods, all_activities=all_activities, all_trainings=all_trainings, all_groomings=all_groomings, all_notes=all_notes, all_meds=all_meds, dog_info=dog_info)
 
+# Data for Meal Chart
 @app.route("/mealdata")
 def mealdata():
 
     dog_id = session['dog_id']
     current_month = date.today().strftime("%m")
-
-    # meals chart data
     meal_amounts = crud.get_month_meals(dog_id, current_month)
 
     return jsonify(meal_amounts) 
 
+# Data for Mood Chart
 @app.route("/mooddata")
 def mooddata():
 
     dog_id = session['dog_id']
     current_month = date.today().strftime("%m")
-
     mood_amounts = crud.get_month_moods(dog_id, current_month)
 
     return jsonify(mood_amounts)
 
+# Data for Grooming Chart
 @app.route("/groomdata")
 def groomdata():
 
     dog_id = session['dog_id']
     current_month = date.today().strftime("%m")
-
     groom_amounts = crud.get_month_grooms(dog_id, current_month)
 
     return jsonify(groom_amounts)  
 
+# Data for Training Chart
 @app.route("/trainingdata")
 def trainingdata():
 
     dog_id = session['dog_id']
     current_month = date.today().strftime("%m")
-
     training_amounts = crud.get_month_training(dog_id, current_month)
 
     return jsonify(training_amounts) 
 
+# Data for Activity Chart
 @app.route("/activitydata")
 def activitydata():
 
     dog_id = session['dog_id']
     current_month = date.today().strftime("%m")
-
     activity_amounts = crud.get_month_activity(dog_id, current_month)
 
     return jsonify(activity_amounts) 
+    
 
 #Running the flask app when name = main
 if __name__ == "__main__":
