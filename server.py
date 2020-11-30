@@ -37,7 +37,7 @@ def login():
         owner = crud.get_owner_by_email(form.email.data)
         if owner:
             if check_password_hash(owner.password, form.password.data):
-                owners_dog = crud.get_dog_by_owner(session['owner_email'])
+                owners_dog = crud.get_dog_by_owner(owner.email)
                 session['owner_email'] = owner.email
                 session['dog_id'] = owners_dog.dog_id
                 return redirect('/dashboard')
